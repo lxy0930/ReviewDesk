@@ -571,37 +571,6 @@ LangGraph 的 checkpoint 表由 `AsyncPostgresSaver.setup()` 在同一个 Postgr
 - **Pydantic 约束**：简历结构、维度评分、简答评分和总结均使用结构化模型约束 LLM 输出。
 - **SSE 流式响应**：AI 助手在生成过程中持续向前端推送 token，降低首字等待时间。
 
-## 当前限制
-
-- 当前只有 Exam Agent 和 Resume Agent，不包含 QA Agent、面试 Agent 或知识库检索。
-- 简历审查只支持文本型 PDF；扫描件和纯图片 PDF 暂未接入 OCR。
-- 试卷提交只支持 `.docx`，暂不支持在线答题或图片答卷。
-- `word_minio_path` 和 `pdf_minio_path` 是兼容字段名，本地模式未实际接入 MinIO。
-- Docker Compose 当前只包含 PostgreSQL，前后端需要在本机运行。
-- 当前没有完整自动化测试套件，正式开源后建议补充单元测试、集成测试和前端构建检查。
-- 部分教师查询与确认接口目前只校验登录状态。生产环境建议统一增加角色依赖，明确限定为 `teacher` 或 `admin`。
-- 启动时自动执行的迁移是轻量 DDL 补丁，复杂 Schema 演进建议迁移到 Alembic。
-
-## 开源前安全检查
-
-在推送到 GitHub 前，必须确认以下内容没有进入版本库：
-
-- `.env.local`、`.env` 或任何真实 API Key。
-- 数据库密码和 JWT Secret。
-- 真实简历 PDF、个人身份信息和手机号、邮箱。
-- `frontend/node_modules/`、`frontend/dist/`。
-- `__pycache__/`、`.pytest_cache/` 和其他本地缓存。
-- 生成的日志、临时上传文件和后端临时检查点导出文件。
-
-仓库根目录已提供 `.gitignore` 和 `.env.example`。首次提交前执行：
-
-```powershell
-git status
-git diff --cached
-```
-
-逐项确认暂存内容，不要直接执行 `git add .` 后立即推送。
-
 ## 常见问题
 
 ### 为什么不能直接运行 `uvicorn backend.main:app`？
