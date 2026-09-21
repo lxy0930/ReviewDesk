@@ -37,7 +37,7 @@ TIMEOUT_PER_ATTEMPT = 120.0       # 单次调用最多等 30 秒，超时算失�
 def with_retry(agent_type: str = "", allow_fallback: bool = True):
     """三层兜底装饰器工厂。给异步函数套上「重试 → 降级 → 系统兜底」三层保护。
     用法：
-        @with_retry(agent_type="qa")
+        @with_retry(agent_type="resume")
         async def _invoke():
             return await graph.ainvoke(state, config=config)
     """
@@ -103,26 +103,14 @@ class AgentFallbackHandler:
     async def handle(cls, agent_type: str, original_error: Exception) -> Any:
         """根据 agent_type 选择对应的降级策略。"""
         fallback_map = {                              # 类型 → 降级方法 的映射表
-            "qa":               cls._qa_fallback,
             "exam_code":        cls._exam_code_fallback,
             "exam_subjective":  cls._exam_subjective_fallback,
             "resume":           cls._resume_fallback,
-            "interview":        cls._interview_fallback,
         }
         handler = fallback_map.get(agent_type)        # 查表
         if handler:
             return await handler()
         raise original_error                          # 没有对应降级策略，原样抛出（交给系统兜底）
-
-    @classmethod
-    async def _qa_fallback(cls) -> dict:
-        """问答降级：知识库或模型不可用，返回提示语。"""
-        logger.info("fallback.qa_service_unavailable")
-        return {
-            "fallback_used": True,
-            "content": "⚠️ 知识库检索暂时不可用，请稍后重试或直接联系教师提问。",
-            "structured_output": None,
-        }
 
     @classmethod
     async def _exam_code_fallback(cls) -> dict:
@@ -154,23 +142,11 @@ class AgentFallbackHandler:
             "structured_output": None,
         }
 
-    @classmethod
-    async def _interview_fallback(cls) -> dict:
-        """面试降级：跳过深度分析，返回基础反馈。"""
-        logger.info("fallback.interview_basic_feedback")
-        return {
-            "fallback_used": True,
-            "content": "面试评估服务暂时不可用，已记录本次面试对话，请稍后查看报告。",
-            "structured_output": None,
-        }
-
 def _system_fallback_response(agent_type: str) -> dict:
     """第三层：系统级兜底。所有降级都失败后返回它，保证用户始终能收到响应。"""
     messages = {                                      # 按 agent_type 给不同的友好提示
-        "qa":        "非常抱歉，智能问答服务暂时不可用，请稍后再试，或直接联系教师提问。",
         "exam":      "非常抱歉，试卷批改服务暂时不可用，您的提交已保存，待服务恢复后将自动处理。",
         "resume":    "非常抱歉，简历审查服务暂时不可用，请稍后重新上传。",
-        "interview": "非常抱歉，模拟面试服务暂时不可用，请稍后重新开始。",
     }
     content = messages.get(agent_type, "服务暂时不可用，请稍后再试。")  # 找不到就用通用提示
     return {
@@ -187,11 +163,11 @@ if __name__ == '__main__':
     calls = {"n": 0}
 
     # ── ① 正常成功 ──────────────────────────────────────────────
-    @with_retry(agent_type="qa")
+    @with_retry(agent_type="resume")
     async def ok():
         return "success"
     # # ── ② 重试后成功 ────────────────────────────────────────────
-    @with_retry(agent_type="qa")
+    @with_retry(agent_type="resume")
     async def fail_twice_then_ok():
         calls["n"] += 1
         if calls["n"] < 3:
@@ -199,7 +175,7 @@ if __name__ == '__main__':
         return "recovered"
 
     # # ── ③ 不可重试异常立即抛出 ──────────────────────────────────
-    @with_retry(agent_type="qa")
+    @with_retry(agent_type="exam")
     async def non_retryable():
         raise InvalidInputError("输入非法")
 
@@ -211,10 +187,10 @@ if __name__ == '__main__':
 
 
     # ── ⑤ 三次全败 + 有降级策略 → 第二层 Agent 降级 ─────────────
-    # 以 qa 为代表；resume / interview / exam_code / exam_subjective 结构完全相同
-    @with_retry(agent_type="qa")
-    async def qa_node_always_fail():
-        raise LLMAPIError("Milvus 连接超时")
+    # 以 resume 为代表；exam_code / exam_subjective 结构相同
+    @with_retry(agent_type="resume")
+    async def resume_node_always_fail():
+        raise LLMAPIError("模型服务连接超时")
 
 
     async def main():
@@ -223,6 +199,6 @@ if __name__ == '__main__':
         # result = await fail_twice_then_ok()
         # result = await non_retryable()
         # result = await always_fail()
-        result = await qa_node_always_fail()
+        result = await resume_node_always_fail()
         print(f'result-->{result}')
     asyncio.run(main())
