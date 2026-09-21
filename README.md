@@ -276,37 +276,60 @@ Windows PowerShell：
 pip install -r requirements.txt
 ```
 
-### 3. 配置环境变量
+### 3. 创建本地配置文件
 
-根目录复制后端示例配置：
+`.env.local` 不需要由仓库提供，它也不会出现在 GitHub 上。仓库只提供不包含真实密钥的模板文件 `.env.example`。第一次运行时，需要把模板复制成每个人自己的本地配置：
+
+```text
+.env.example              -> 后端配置模板，可以被 Git 跟踪
+.env.local                -> 你本机的真实配置，禁止提交到 Git
+frontend/.env.example     -> 前端配置模板，可以被 Git 跟踪
+frontend/.env.local       -> 你本机的真实配置，禁止提交到 Git
+```
+
+以下命令都在项目根目录执行。
+
+Windows PowerShell：
 
 ```powershell
 Copy-Item .env.example .env.local
+Copy-Item frontend/.env.example frontend/.env.local
 ```
 
-然后编辑 `.env.local`，至少填写：
+macOS 或 Linux：
+
+```bash
+cp .env.example .env.local
+cp frontend/.env.example frontend/.env.local
+```
+
+执行后，根目录下会出现一个新的后端配置文件 `.env.local`。用编辑器打开它，把占位值替换成自己的本地配置：
 
 ```ini
+DB_HOST=localhost
+DB_PORT=5433
+DB_NAME=eduagent
 DB_USER=reviewdesk
-DB_PASSWORD=change_me
-DEEPSEEK_API_KEY=sk-your-deepseek-api-key
-JWT_SECRET_KEY=replace-with-a-long-random-secret
+DB_PASSWORD=请替换成本地数据库密码
+
+DEEPSEEK_API_KEY=请替换成你的DeepSeek_API_Key
+JWT_SECRET_KEY=请替换成足够长的随机字符串
 ```
 
-前端目录复制前端配置：
+其中：
 
-```powershell
-Set-Location frontend
-Copy-Item .env.example .env.local
-```
+- `DB_USER` 和 `DB_PASSWORD` 会同时被 Docker PostgreSQL 和后端使用，两个地方必须保持一致。
+- `DEEPSEEK_API_KEY` 必须填写，否则意图识别、试卷批改和简历审查无法调用模型。
+- `JWT_SECRET_KEY` 用于登录令牌签名，生产环境必须使用随机值。
+- `.env.local` 已被 `.gitignore` 忽略，不要把真实密钥提交到 GitHub。
 
-默认内容：
+前端配置文件 `frontend/.env.local` 默认内容如下：
 
 ```ini
 VITE_API_BASE_URL=http://localhost:8000
 ```
 
-本地开发保持 `localhost`。如果从局域网其他设备访问前端，需要改为后端所在机器的 IP，并同步调整后端 CORS 配置。
+本机开发保持 `localhost`。如果从局域网其他设备访问前端，需要改为后端所在机器的 IP，并同步调整后端 CORS 配置。
 
 ### 4. 启动 PostgreSQL
 
