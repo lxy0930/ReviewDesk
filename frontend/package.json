@@ -1,0 +1,28 @@
+{
+  "name": "review-desk-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "pinia": "^2.1.7",
+    "element-plus": "^2.7.2",
+    "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.7.2",
+    "markdown-it": "^14.1.0",
+    "highlight.js": "^11.10.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.0",
+    "typescript": "^5.4.0",
+    "vue-tsc": "^2.0.6",
+    "@types/markdown-it": "^14.1.2"
+  }
+}

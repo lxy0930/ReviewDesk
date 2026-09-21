@@ -1,0 +1,42 @@
+:root {
+  --el-color-primary: #0f766e;
+  --el-color-primary-light-3: #4ca39b;
+  --el-color-primary-light-5: #83c5bf;
+  --el-color-primary-light-7: #b8dfdc;
+  --el-color-primary-light-8: #d4ecea;
+  --el-color-primary-light-9: #e9f6f5;
+  --el-color-primary-dark-2: #0b5d57;
+  --el-color-success: #2f7d5d;
+  --el-color-warning: #b7791f;
+  --el-color-danger: #c44536;
+  --el-border-radius-base: 4px;
+  --el-text-color-primary: #1f2933;
+  --el-text-color-regular: #44515e;
+  --el-text-color-secondary: #74818d;
+  --el-bg-color-page: #f5f6f7;
+  --el-border-color: #dce1e5;
+  --el-border-color-light: #e7eaed;
+
+  color: #1f2933;
+  font-family:
+    Inter,
+    'PingFang SC',
+    'Microsoft YaHei',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+body {
+  margin: 0;
+  color: #1f2933;
+  background: #f5f6f7;
+}
+
+.el-card {
+  --el-card-border-radius: 4px;
+}
+
+.el-button {
+  font-weight: 600;
+}
