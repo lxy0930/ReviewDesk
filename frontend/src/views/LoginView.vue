@@ -5,22 +5,19 @@
         <span class="brand-mark">RD</span>
         <span>ReviewDesk</span>
       </div>
-      <div class="story-copy">
-        <p class="story-label">私人工作台</p>
-        <h1>把重复工作交给 AI，把判断留给自己。</h1>
-        <p>
-          集中处理试卷预批改、教师复核和简历诊断，让每一次反馈都更快一步。
-        </p>
+      <div class="character-scene">
+        <AnimatedCharacters
+          :is-typing="isTyping"
+          :show-password="showPassword"
+          :password-length="form.password.length"
+        />
       </div>
-      <div class="story-cards">
+      <div class="story-footer">
         <div>
-          <b>Exam Agent</b>
-          <span>三轨批改与薄弱点分析</span>
+          <b>让批改更快，让建议更具体</b>
+          <span>试卷预批改、教师复核与简历诊断都集中在这里。</span>
         </div>
-        <div>
-          <b>Resume Agent</b>
-          <span>六维度岗位匹配诊断</span>
-        </div>
+        <span class="story-status">Private workspace</span>
       </div>
     </section>
 
@@ -49,18 +46,32 @@
               placeholder="请输入用户名"
               size="large"
               :prefix-icon="User"
+              @focus="focusedField = 'username'"
+              @blur="focusedField = null"
             />
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input
               v-model="form.password"
-              type="password"
+              :type="showPassword ? 'text' : 'password'"
               placeholder="请输入密码"
               size="large"
               :prefix-icon="Lock"
-              show-password
+              @focus="focusedField = 'password'"
+              @blur="focusedField = null"
               @keyup.enter="handleLogin"
-            />
+            >
+              <template #suffix>
+                <el-icon
+                  class="password-toggle"
+                  @mousedown.prevent
+                  @click="showPassword = !showPassword"
+                >
+                  <View v-if="showPassword" />
+                  <Hide v-else />
+                </el-icon>
+              </template>
+            </el-input>
           </el-form-item>
           <el-button
             type="primary"
@@ -78,19 +89,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { computed, ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
-import { User, Lock } from '@element-plus/icons-vue'
+import { Hide, Lock, User, View } from '@element-plus/icons-vue'
 import { authApi } from '@/api/auth'
 import { useAuthStore } from '@/stores/auth'
+import AnimatedCharacters from '@/components/login/AnimatedCharacters.vue'
 
 const router = useRouter()
 const auth = useAuthStore()
 
 const formRef = ref<FormInstance>()
 const loading = ref(false)
+const focusedField = ref<'username' | 'password' | null>(null)
+const showPassword = ref(false)
 const form = reactive({ username: '', password: '' })
+const isTyping = computed(() => focusedField.value !== null)
 
 const rules: FormRules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -167,61 +182,49 @@ async function handleLogin() {
   font-weight: 800;
 }
 
-.story-copy {
+.character-scene {
   position: relative;
   z-index: 1;
-  max-width: 520px;
+  min-height: 430px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.story-label {
-  margin: 0 0 16px;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 14px;
-  font-weight: 550;
-}
-
-.story-copy h1 {
-  margin: 0;
-  font-size: clamp(38px, 4.2vw, 62px);
-  line-height: 1.06;
-  font-weight: 750;
-  letter-spacing: -0.055em;
-}
-
-.story-copy > p:last-child {
-  max-width: 460px;
-  margin: 22px 0 0;
-  color: rgba(255, 255, 255, 0.74);
-  font-size: 16px;
-  line-height: 1.75;
-}
-
-.story-cards {
+.story-footer {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
 }
 
-.story-cards > div {
+.story-footer > div {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 15px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(10px);
+  gap: 5px;
 }
 
-.story-cards b {
-  font-size: 13px;
+.story-footer b {
+  font-size: 14px;
+  font-weight: 650;
 }
 
-.story-cards span {
-  color: rgba(255, 255, 255, 0.66);
+.story-footer span {
+  color: rgba(255, 255, 255, 0.64);
   font-size: 12px;
+}
+
+.story-status {
+  padding: 5px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  white-space: nowrap;
 }
 
 .login-panel {
@@ -276,6 +279,16 @@ async function handleLogin() {
 .login-form-wrap :deep(.el-input__wrapper) {
   min-height: 48px;
   padding: 1px 14px;
+}
+
+.password-toggle {
+  cursor: pointer;
+  color: var(--rd-muted);
+  transition: color 160ms ease;
+}
+
+.password-toggle:hover {
+  color: var(--rd-primary);
 }
 
 .login-button {
