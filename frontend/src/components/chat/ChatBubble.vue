@@ -33,8 +33,8 @@ defineProps<{
 <style scoped>
 .chat-bubble {
   display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 .chat-bubble.user {
   flex-direction: row-reverse;
@@ -42,8 +42,8 @@ defineProps<{
 .avatar {
   font-size: 24px;
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,21 +52,23 @@ defineProps<{
   max-width: 72%;
 }
 .bubble-content {
-  padding: 10px 14px;
-  border-radius: 12px;
+  padding: 12px 16px;
+  border-radius: 18px;
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.68;
   word-break: break-word;
 }
 .user .bubble-content {
-  background: #1677ff;
+  background: var(--rd-primary);
   color: #fff;
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 8px 18px rgba(64, 83, 181, 0.16);
 }
 .assistant .bubble-content {
   background: #fff;
-  border: 1px solid #f0f0f0;
-  border-bottom-left-radius: 4px;
+  border: 1px solid var(--rd-border);
+  border-bottom-left-radius: 6px;
+  box-shadow: 0 8px 24px rgba(24, 24, 27, 0.04);
 }
 .sources {
   margin-top: 6px;
@@ -75,6 +77,6 @@ defineProps<{
 .sources ul {
   margin: 0;
   padding-left: 16px;
-  color: #595959;
+  color: var(--rd-muted);
 }
 </style>

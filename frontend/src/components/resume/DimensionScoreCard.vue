@@ -80,9 +80,9 @@ const progressColor = computed(() => {
 }
 .dim-name { font-weight: 500; font-size: 14px; }
 .dim-score { display: flex; align-items: baseline; gap: 2px; }
-.score-val { font-size: 22px; font-weight: 700; color: #1677ff; }
-.score-max { font-size: 13px; color: #8c8c8c; }
-.dim-weight { font-size: 12px; color: #8c8c8c; margin-bottom: 8px; }
+.score-val { font-size: 24px; font-weight: 750; color: var(--rd-primary); }
+.score-max { font-size: 13px; color: var(--rd-muted); }
+.dim-weight { font-size: 12px; color: var(--rd-muted); margin-bottom: 10px; }
 .issue-list, .suggestion-list { margin-top: 8px; }
 .issue-item, .suggestion-item {
   display: flex;

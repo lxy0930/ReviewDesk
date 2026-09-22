@@ -1,6 +1,9 @@
 <template>
   <div class="resume-report">
-    <el-page-header @back="router.push('/resume')" title="返回" content="简历审查报告" />
+    <div class="report-intro">
+      <el-page-header @back="router.push('/resume')" title="返回" content="简历审查报告" />
+      <p class="page-subtitle">查看六维度评分、问题定位和针对性修改建议。</p>
+    </div>
 
     <div v-if="loading" style="margin-top: 24px">
       <el-skeleton :rows="10" animated />
@@ -98,7 +101,7 @@
     </template>
 
     <el-card v-else-if="review?.status === 'processing'" style="margin-top: 16px; text-align: center">
-      <el-icon class="is-loading" style="font-size: 32px; color: #1677ff"><Loading /></el-icon>
+      <el-icon class="is-loading" style="font-size: 32px; color: var(--rd-primary)"><Loading /></el-icon>
       <p>AI 正在审查中，请稍候...</p>
       <p style="color: #8c8c8c; font-size: 13px">通常需要 30-60 秒</p>
       <p v-if="transientError" style="color: #d46b08; font-size: 13px">{{ transientError }}</p>
@@ -185,12 +188,13 @@ onUnmounted(() => {
 
 <style scoped>
 .resume-report { max-width: 1100px; }
-.total-score { font-size: 56px; font-weight: 700; color: #1677ff; line-height: 1; }
-.total-label { font-size: 14px; color: #8c8c8c; margin: 4px 0 8px; }
-.total-comment { font-size: 14px; color: #595959; max-width: 600px; margin: 0 auto; }
+.report-intro { margin-bottom: 18px; }
+.total-score { font-size: 56px; font-weight: 750; color: var(--rd-primary); line-height: 1; }
+.total-label { font-size: 14px; color: var(--rd-muted); margin: 4px 0 8px; }
+.total-comment { font-size: 14px; color: var(--rd-muted); max-width: 600px; margin: 0 auto; }
 .summary-section { margin-bottom: 12px; }
 .summary-title { font-weight: 500; margin-bottom: 6px; }
 .summary-section ul { padding-left: 20px; margin: 0; font-size: 14px; line-height: 1.8; }
-.fit-assessment { margin-top: 12px; font-size: 14px; color: #595959; }
+.fit-assessment { margin-top: 12px; font-size: 14px; color: var(--rd-muted); }
 .issue-toggle { margin-top: 10px; }
 </style>

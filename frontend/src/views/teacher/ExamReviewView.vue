@@ -1,5 +1,10 @@
 <template>
   <div class="exam-review">
+    <div class="page-intro">
+      <h2 class="page-heading">批改确认</h2>
+      <p class="page-subtitle">查看学生提交、AI 预批改结果，并在发布前完成分数复核。</p>
+    </div>
+
     <el-card style="margin-bottom: 16px">
       <template #header>
         <span>全部提交记录</span>
@@ -522,7 +527,8 @@ onMounted(refreshAll)
 </script>
 
 <style scoped>
-.exam-review { max-width: 1100px; }
+.exam-review { max-width: 1180px; }
+.page-intro { margin-bottom: 24px; }
 .overview-tags { display: flex; gap: 8px; }
 
 .q-title-row {
@@ -558,24 +564,27 @@ onMounted(refreshAll)
 }
 
 .q-content {
-  background: #f5f7fa;
-  border-radius: 4px;
-  padding: 6px 10px;
+  background: #fafafa;
+  border: 1px solid var(--rd-border-soft);
+  border-radius: 10px;
+  padding: 8px 11px;
   white-space: pre-wrap;
   word-break: break-all;
 }
 
 .q-answer {
-  background: #f5f7fa;
-  border-radius: 4px;
-  padding: 6px 10px;
+  background: #fafafa;
+  border: 1px solid var(--rd-border-soft);
+  border-radius: 10px;
+  padding: 8px 11px;
   white-space: pre-wrap;
   word-break: break-all;
   min-height: 32px;
 }
 .q-answer.correct {
-  background: #f0f9eb;
-  color: #529b2e;
+  background: #f0fdf4;
+  border-color: #dcfce7;
+  color: #166534;
 }
 
 .q-feedback {
@@ -596,10 +605,10 @@ onMounted(refreshAll)
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  padding: 8px 10px;
+  padding: 10px 12px;
   background: #fafafa;
-  border-radius: 4px;
-  border: 1px solid #e4e7ed;
+  border-radius: 12px;
+  border: 1px solid var(--rd-border);
 }
 
 .action-bar {

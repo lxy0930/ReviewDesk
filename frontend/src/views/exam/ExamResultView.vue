@@ -1,6 +1,9 @@
 <template>
   <div class="exam-result">
-    <el-page-header @back="router.push('/exam')" title="返回" content="批改结果" />
+    <div class="result-intro">
+      <el-page-header @back="router.push('/exam')" title="返回" content="批改结果" />
+      <p class="page-subtitle">查看逐题批改、教师批注和知识薄弱点。</p>
+    </div>
 
     <div v-if="loading" class="loading-state">
       <el-skeleton :rows="8" animated />
@@ -167,18 +170,24 @@ onUnmounted(stopPoll)
 </script>
 
 <style scoped>
-.exam-result { max-width: 900px; }
+.exam-result { max-width: 1180px; }
+.result-intro { margin-bottom: 18px; }
 .loading-state { margin-top: 24px; }
 .score-card { text-align: center; padding: 8px 0; }
-.score-num { font-size: 36px; font-weight: 700; color: #1677ff; }
-.score-full { font-size: 18px; color: #8c8c8c; }
-.score-label { font-size: 13px; color: #8c8c8c; margin-top: 4px; }
+.score-num { font-size: 36px; font-weight: 750; color: var(--rd-primary); }
+.score-full { font-size: 18px; color: var(--rd-muted); }
+.score-label { font-size: 13px; color: var(--rd-muted); margin-top: 4px; }
 .weak-title { font-weight: 500; margin-bottom: 8px; }
 .weak-tags { margin-bottom: 8px; }
-.weak-summary { font-size: 13px; color: #595959; }
+.weak-summary { font-size: 13px; color: var(--rd-muted); }
 .q-title { display: flex; align-items: center; }
 .q-detail { padding: 8px 0; }
 .q-row { margin-bottom: 8px; font-size: 14px; line-height: 1.6; }
 .q-content { white-space: pre-wrap; }
-.teacher-comment { color: #d46b08; background: #fff7e6; padding: 6px 10px; border-radius: 4px; }
+.teacher-comment {
+  padding: 8px 11px;
+  border-radius: 10px;
+  color: #92400e;
+  background: #fffbeb;
+}
 </style>

@@ -64,11 +64,11 @@ const modeDisplay = computed(() => {
 
 <style scoped>
 .routing-card {
-  background: #f0f7ff;
-  border: 1px solid #bae0ff;
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-bottom: 4px;
+  background: var(--rd-primary-soft);
+  border: 1px solid #d7dbf3;
+  border-radius: 16px;
+  padding: 12px 15px;
+  margin-bottom: 8px;
   font-size: 13px;
 }
 .routing-header {
@@ -77,7 +77,7 @@ const modeDisplay = computed(() => {
   gap: 6px;
   margin-bottom: 8px;
   font-weight: 500;
-  color: #1677ff;
+  color: var(--rd-primary);
 }
 .routing-icon {
   font-size: 14px;
@@ -101,13 +101,13 @@ const modeDisplay = computed(() => {
   gap: 8px;
 }
 .label {
-  color: #8c8c8c;
+  color: var(--rd-muted);
   min-width: 52px;
   flex-shrink: 0;
 }
 .reason-text,
 .mode-text {
-  color: #262626;
+  color: var(--rd-text);
   line-height: 1.5;
 }
 </style>

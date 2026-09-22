@@ -1,7 +1,12 @@
 <template>
   <div class="resume-upload">
+    <div class="page-intro">
+      <h2 class="page-heading">简历审查</h2>
+      <p class="page-subtitle">结合目标岗位描述，从六个维度评估简历质量并定位问题。</p>
+    </div>
+
     <el-card>
-      <template #header><span>📄 上传简历</span></template>
+      <template #header><span>上传简历</span></template>
 
       <el-form :model="form" label-width="100px" style="max-width: 720px">
         <el-form-item label="目标岗位" required>
@@ -50,7 +55,7 @@
     </el-card>
 
     <!-- 历史记录 -->
-    <el-card style="margin-top: 16px">
+    <el-card style="margin-top: 18px">
       <template #header>
         <span>历史审查记录</span>
         <el-button style="float: right" :icon="Refresh" circle size="small" @click="fetchHistory" />
@@ -170,8 +175,24 @@ onMounted(fetchHistory)
 </script>
 
 <style scoped>
-.resume-upload { max-width: 800px; }
+.resume-upload {
+  max-width: 980px;
+}
+.page-intro {
+  margin-bottom: 24px;
+}
 .file-picker { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.file-name { font-size: 13px; color: #595959; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.upload-tip { font-size: 12px; color: #8c8c8c; margin-top: 8px; }
+.file-name {
+  max-width: 300px;
+  overflow: hidden;
+  color: var(--rd-text);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.upload-tip {
+  margin-top: 8px;
+  color: var(--rd-muted);
+  font-size: 12px;
+}
 </style>

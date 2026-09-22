@@ -5,11 +5,17 @@
     </el-aside>
     <el-container direction="vertical">
       <el-header class="app-header">
-        <span class="header-title">ReviewDesk 工作台</span>
+        <div class="header-left">
+          <span class="header-kicker">ReviewDesk</span>
+          <span class="header-title">工作台</span>
+        </div>
         <div class="header-right">
-          <span class="username">{{ auth.user?.username ?? auth.user?.userId }}</span>
+          <div class="user-chip">
+            <span class="user-avatar">{{ userInitial }}</span>
+            <span class="username">{{ auth.user?.username ?? auth.user?.userId }}</span>
+          </div>
           <el-dropdown @command="handleCommand">
-            <el-button text :icon="ArrowDown" />
+            <el-button class="account-button" text :icon="ArrowDown" />
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item command="logout">退出登录</el-dropdown-item>
@@ -31,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onErrorCaptured } from 'vue'
+import { computed, ref, onErrorCaptured } from 'vue'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
@@ -39,6 +45,10 @@ import Sidebar from './Sidebar.vue'
 
 const auth = useAuthStore()
 const router = useRouter()
+const userInitial = computed(() => {
+  const name = auth.user?.username ?? auth.user?.userId ?? 'R'
+  return name.slice(0, 1).toUpperCase()
+})
 
 // 路由切换期间（含懒加载 JS chunk 下载）显示顶部进度条
 const navigating = ref(false)
@@ -71,33 +81,84 @@ function handleCommand(cmd: string) {
 <style scoped>
 .app-layout {
   height: 100vh;
+  gap: 8px;
+  padding: 8px 0 8px 8px;
+  background: var(--rd-shell);
 }
 .sidebar-aside {
-  background: #101828;
+  background: transparent;
   overflow: hidden;
+  flex-shrink: 0;
+}
+.app-layout > .el-container {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--rd-border);
+  border-radius: var(--rd-radius-xl) 0 0 var(--rd-radius-xl);
+  background: var(--rd-surface);
 }
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
-  border-bottom: 1px solid #f0f0f0;
-  padding: 0 24px;
-  height: 56px;
+  height: 64px;
+  padding: 0 28px;
+  background: var(--rd-surface);
+  border-bottom: 1px solid var(--rd-border-soft);
+}
+.header-left {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.header-kicker {
+  color: var(--rd-primary);
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
 }
 .header-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #0f766e;
+  color: var(--rd-ink);
+  font-size: 16px;
+  font-weight: 650;
 }
 .header-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+}
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 8px 5px 5px;
+  border: 1px solid var(--rd-border);
+  border-radius: 999px;
+  background: #fafafa;
+}
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--rd-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 750;
 }
 .username {
   font-size: 14px;
-  color: #595959;
+  color: var(--rd-text);
+  font-weight: 550;
+}
+.account-button {
+  width: 34px;
+  min-height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  color: var(--rd-muted);
 }
 /* 路由进度条：高度 3px，懒加载期间动态扫描动画 */
 .nav-progress-bar {
@@ -107,14 +168,14 @@ function handleCommand(cmd: string) {
   flex-shrink: 0;
 }
 .nav-progress-bar.active {
-  background: #e6f6f4;
+  background: var(--rd-primary-soft);
 }
 .nav-progress-bar.active::after {
   content: '';
   display: block;
   height: 100%;
   width: 40%;
-  background: #0f766e;
+  background: var(--rd-primary);
   animation: nav-scan 0.9s ease-in-out infinite;
 }
 @keyframes nav-scan {
@@ -124,15 +185,46 @@ function handleCommand(cmd: string) {
 .app-main {
   display: flex;
   justify-content: center;
-  background: #f5f6f7;
+  background: var(--rd-surface);
   overflow-y: auto;
-  padding: 24px;
+  padding: 28px 32px 40px;
 }
 
 .app-main > * {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1180px;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (max-width: 900px) {
+  .app-layout {
+    gap: 0;
+    padding: 0;
+  }
+  .sidebar-aside {
+    --el-aside-width: 72px !important;
+    width: 72px !important;
+  }
+  .app-layout > .el-container {
+    border-left: 0;
+    border-radius: 0;
+  }
+  .app-header {
+    height: 58px;
+    padding: 0 16px;
+  }
+  .header-kicker,
+  .username {
+    display: none;
+  }
+  .user-chip {
+    padding: 3px;
+    border: 0;
+    background: transparent;
+  }
+  .app-main {
+    padding: 20px 16px 32px;
+  }
 }
 </style>

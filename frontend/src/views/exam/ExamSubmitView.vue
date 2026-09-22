@@ -1,8 +1,13 @@
 <template>
   <div class="exam-submit">
+    <div class="page-intro">
+      <h2 class="page-heading">试卷批改</h2>
+      <p class="page-subtitle">提交 Word 答卷，AI 会完成客观题、简答题和代码题的预批改。</p>
+    </div>
+
     <el-card>
       <template #header>
-        <span>📝 提交试卷</span>
+        <span>提交试卷</span>
       </template>
 
       <el-form :model="form" label-width="100px" style="max-width: 560px">
@@ -38,7 +43,7 @@
     </el-card>
 
     <!-- 历史提交记录 -->
-    <el-card style="margin-top: 16px">
+    <el-card style="margin-top: 18px">
       <template #header>
         <span>历史提交</span>
       </template>
@@ -138,6 +143,15 @@ onMounted(fetchSubmissions)
 </script>
 
 <style scoped>
-.exam-submit { max-width: 800px; }
-.upload-tip { font-size: 12px; color: #8c8c8c; margin-top: 4px; }
+.exam-submit {
+  max-width: 980px;
+}
+.page-intro {
+  margin-bottom: 24px;
+}
+.upload-tip {
+  margin-top: 4px;
+  color: var(--rd-muted);
+  font-size: 12px;
+}
 </style>

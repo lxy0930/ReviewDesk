@@ -2,8 +2,13 @@
   <div class="chat-page">
     <div class="chat-panel">
       <div class="chat-header-hint">
-        <el-icon><ChatDotRound /></el-icon>
-        描述需求，我会自动判断是试卷批改还是简历审查。
+        <span class="chat-title-icon">
+          <el-icon><ChatDotRound /></el-icon>
+        </span>
+        <div>
+          <b>AI 助手</b>
+          <span>描述需求，我会自动判断是试卷批改还是简历审查。</span>
+        </div>
       </div>
 
       <div class="chat-messages" ref="messagesEl">
@@ -275,12 +280,14 @@ async function scrollToBottom() {
 <style scoped>
 .chat-page {
   display: flex;
-  height: calc(100vh - 56px - 48px);
+  height: calc(100vh - 150px);
+  min-height: 560px;
 }
 .chat-panel {
   flex: 1;
+  border: 1px solid var(--rd-border);
+  border-radius: var(--rd-radius-xl);
   background: #fff;
-  border-radius: 8px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -288,21 +295,44 @@ async function scrollToBottom() {
 .chat-header-hint {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 20px;
+  gap: 12px;
+  padding: 15px 20px;
   font-size: 13px;
-  color: #8c8c8c;
-  border-bottom: 1px solid #f0f0f0;
-  background: #fafafa;
+  color: var(--rd-muted);
+  border-bottom: 1px solid var(--rd-border-soft);
+  background: #fff;
+}
+.chat-header-hint > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.chat-header-hint b {
+  color: var(--rd-ink);
+  font-size: 14px;
+  font-weight: 700;
+}
+.chat-title-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 12px;
+  color: var(--rd-primary);
+  background: var(--rd-primary-soft);
+  font-size: 18px;
 }
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 24px;
+  background: #fafafa;
 }
 .empty-hint {
   text-align: center;
-  color: #8c8c8c;
+  color: var(--rd-muted);
   margin-top: 60px;
   font-size: 15px;
   line-height: 2;
@@ -319,14 +349,16 @@ async function scrollToBottom() {
 }
 .example-tag {
   cursor: pointer;
-  transition: opacity 0.15s;
+  transition: transform 0.15s, border-color 0.15s;
 }
 .example-tag:hover {
-  opacity: 0.75;
+  transform: translateY(-1px);
+  border-color: var(--rd-primary);
 }
 .chat-input-area {
-  border-top: 1px solid #f0f0f0;
-  padding: 12px 16px;
+  border-top: 1px solid var(--rd-border-soft);
+  padding: 14px 16px 16px;
+  background: #fff;
 }
 .input-actions {
   display: flex;
@@ -341,13 +373,13 @@ async function scrollToBottom() {
   gap: 5px;
   padding: 4px 0;
   font-size: 13px;
-  color: #8c8c8c;
+  color: var(--rd-muted);
 }
 .dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #bfbfbf;
+  background: #a1a1aa;
   animation: bounce 1.2s infinite ease-in-out;
 }
 .dot:nth-child(2) {
@@ -366,6 +398,16 @@ async function scrollToBottom() {
   40% {
     transform: scale(1.1);
     opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .chat-page {
+    height: calc(100vh - 120px);
+    min-height: 520px;
+  }
+  .chat-messages {
+    padding: 16px;
   }
 }
 </style>
