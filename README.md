@@ -69,75 +69,6 @@ ReviewDesk 是一个多 Agent 个人提效系统。后端通过统一的 Orchest
 - AI 回复由 LLM 生成并逐 token 流式返回。
 - 当前系统不包含 QA Agent、面试 Agent 或其他知识库问答能力。
 
-## 系统架构
-
-```mermaid
-flowchart LR
-    UI[Vue 3 Frontend] -->|JWT + HTTP/SSE| API[FastAPI /api/v1]
-    API --> Auth[JWT Authentication]
-    API --> Chat[Unified Chat Router]
-    API --> Orchestrator[Central Orchestrator]
-
-    Orchestrator --> ExamGraph[Exam LangGraph]
-    Orchestrator --> ResumeGraph[Resume LangGraph]
-
-    ExamGraph --> Rules[Objective Rule Grader]
-    ExamGraph --> LLM[LLM Factory]
-    ExamGraph --> HITL[Teacher HITL Review]
-    ExamGraph --> Checkpoint[AsyncPostgresSaver]
-
-    ResumeGraph --> PDF[PyMuPDF Extraction]
-    ResumeGraph --> Fanout[Six-Dimension Fan-out]
-    Fanout --> LLM
-
-    API --> DB[(PostgreSQL)]
-    Checkpoint --> DB
-    LLM --> DeepSeek[DeepSeek API]
-```
-
-### Orchestrator 编排层
-
-`backend/core/orchestrator.py` 是系统的中心化 Agent 入口：
-
-- 使用 `AgentType` 注册表统一标识当前支持的 Agent。
-- 按需懒加载并缓存已编译的 LangGraph 图实例。
-- 通过统一的 `Orchestrator.run()` 执行普通 State 或 `Command(resume=...)`。
-- 可选启用统一重试与降级策略。
-- API 层只负责鉴权、参数校验、数据库记录和初始 State 构造。
-
-### LangGraph Workflow
-
-Exam Agent：
-
-```text
-parse_word
-  -> load_questions_meta
-  -> run_three_tracks
-  -> aggregate_results
-  -> analyze_weak_points
-  -> notify_teacher
-  -> teacher_review [interrupt]
-  -> apply_teacher_decision
-  -> publish_results
-  -> END
-```
-
-Resume Agent：
-
-```text
-upload_to_minio
-  -> download_pdf
-  -> extract_text
-  -> extract_structured
-  -> run_six_dimensions
-  -> diagnose_issues
-  -> generate_summary
-  -> save_results
-  -> END
-```
-
-其中 `upload_to_minio` 和 `download_pdf` 在本地模式下只保留扩展位，不依赖 MinIO；当前上传文件先写入系统临时目录，审查结果持久化到 PostgreSQL。
-
 ## 技术栈
 
 ### 前端
@@ -167,13 +98,6 @@ upload_to_minio
 | python-docx | Word 答卷解析 |
 | PyMuPDF | PDF 简历文本提取 |
 | python-jose + Passlib/bcrypt | JWT 鉴权与密码哈希 |
-
-### 基础设施
-
-| 技术 | 用途 |
-| --- | --- |
-| PostgreSQL 15 | 用户、试卷、提交、审查结果和 LangGraph 状态 |
-| Docker Compose | 本地启动 PostgreSQL |
 
 ## 目录结构
 
