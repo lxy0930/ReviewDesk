@@ -142,31 +142,40 @@ upload_to_minio
 
 ### 前端
 
-| 技术 | 用途 |
-| --- | --- |
-| Vue 3 + TypeScript | 页面与组件开发 |
-| Vite | 开发服务器与生产构建 |
-| Vue Router | 路由与登录、教师权限守卫 |
-| Pinia | 登录状态管理 |
-| Element Plus | UI 组件库 |
-| Axios | HTTP 请求与 JWT 注入 |
-| markdown-it + highlight.js | AI 回复 Markdown 渲染与代码高亮 |
+| 技术 | 版本 | 用途 |
+| --- | --- | --- |
+| Vue | 3.5.39 | 页面与组件开发 |
+| TypeScript | 5.9.3 | 前端类型系统 |
+| Vite | 5.4.21 | 开发服务器与生产构建 |
+| Vue Router | 4.6.4 | 路由与登录、教师权限守卫 |
+| Pinia | 2.3.1 | 登录状态管理 |
+| Element Plus | 2.14.2 | UI 组件库 |
+| Axios | 1.18.1 | HTTP 请求与 JWT 注入 |
+| markdown-it | 14.2.0 | AI 回复 Markdown 渲染 |
+| highlight.js | 11.11.1 | 代码语法高亮 |
 
 ### 后端
 
-| 技术 | 用途 |
-| --- | --- |
-| Python 3.11 | 后端运行环境 |
-| FastAPI | REST API 与 SSE 接口 |
-| LangChain | 模型调用、消息与结构化输出 |
-| LangGraph | Agent Workflow、状态图与 Human-in-the-Loop |
-| DeepSeek OpenAI-compatible API | 意图识别、文本生成、简答题与代码题评估 |
-| Pydantic v2 | 请求模型、配置和 LLM 结构化输出约束 |
-| SQLAlchemy Async + asyncpg | 异步业务数据访问 |
-| psycopg + AsyncPostgresSaver | LangGraph PostgreSQL 检查点持久化 |
-| python-docx | Word 答卷解析 |
-| PyMuPDF | PDF 简历文本提取 |
-| python-jose + Passlib/bcrypt | JWT 鉴权与密码哈希 |
+| 技术 | 版本 | 用途 |
+| --- | --- | --- |
+| Python | 3.11 | 后端运行环境 |
+| FastAPI | 0.117.1 | REST API 与 SSE 接口 |
+| Uvicorn | 0.32.1 | ASGI 服务运行器 |
+| SSE-Starlette | 2.1.3 | AI 助手流式响应 |
+| LangChain | 1.2.10 | 模型调用、消息与结构化输出 |
+| LangGraph | 1.0.9 | Agent Workflow、状态图与 Human-in-the-Loop |
+| langgraph-checkpoint-postgres | 3.1.2 | LangGraph PostgreSQL 检查点持久化 |
+| langchain-openai | 1.1.10 | DeepSeek OpenAI 兼容接口接入 |
+| Pydantic | 2.11.4 | 请求模型、配置和 LLM 结构化输出约束 |
+| SQLAlchemy Async | 2.0.36 | 异步 ORM 与数据库访问 |
+| asyncpg | 0.30.0 | PostgreSQL 异步驱动 |
+| psycopg | 3.3.6 | AsyncPostgresSaver 数据库连接 |
+| python-docx | 1.1.2 | Word 答卷解析 |
+| PyMuPDF | 1.24.14 | PDF 简历文本提取 |
+| python-jose | 3.3.0 | JWT 鉴权 |
+| Passlib + bcrypt | 1.7.4 / 4.0.1 | 密码哈希与校验 |
+
+后端版本以 `requirements.txt` 的锁定版本为准；前端版本以 `frontend/package-lock.json` 当前解析版本为准。DeepSeek 通过 OpenAI-compatible API 接入，模型名由 `.env.local` 中的 `DEEPSEEK_MODEL_CHAT` 和 `DEEPSEEK_MODEL_CODER` 配置。
 
 ## 目录结构
 
