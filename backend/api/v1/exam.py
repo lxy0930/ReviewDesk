@@ -25,6 +25,7 @@ orchestrator = get_orchestrator()
 _background_tasks: set[asyncio.Task] = set()
 
 
+# 接口说明：学生提交 Word 答卷并异步触发 AI 三轨批改。
 @router.post("/submit", status_code=202)
 async def submit_exam(
     exam_id: str      = Form(...),
@@ -202,6 +203,7 @@ async def submit_exam(
     }
 
 
+# 接口说明：查询当前学生本人的全部试卷提交记录。
 @router.get("/my-submissions")
 async def list_my_submissions(
     current_user: dict = Depends(get_current_user),
@@ -236,6 +238,7 @@ async def list_my_submissions(
     }
 
 
+# 接口说明：查询本人某次提交的状态；已发布时返回逐题批改结果。
 @router.get("/my-submissions/{submission_id}")
 async def get_my_submission(
     submission_id: str,
@@ -331,6 +334,7 @@ async def get_my_submission(
     }
 
 
+# 接口说明：教师读取某次提交在 LangGraph 中断点的 AI 预批改详情。
 @router.get("/submissions/{submission_id}/review")
 async def get_submission_review(
     submission_id: str,
@@ -360,6 +364,7 @@ async def get_submission_review(
     }
 
 
+# 接口说明：教师查看某次已发布提交的最终批改结果。
 @router.get("/submissions/{submission_id}/result")
 async def get_submission_final_result(
     submission_id: str,
@@ -532,6 +537,7 @@ async def _get_published_result(submission_id: str) -> dict:
     }
 
 
+# 接口说明：教师获取所有等待确认的试卷提交。
 @router.get("/pending-reviews")
 async def get_pending_reviews(
     current_user: dict = Depends(get_current_user),
@@ -592,6 +598,7 @@ async def get_pending_reviews(
     return {"items": items, "total": len(items)}
 
 
+# 接口说明：教师查看全部学生提交、批改状态及统计数量。
 @router.get("/submissions")
 async def list_all_submissions(
     current_user: dict = Depends(get_current_user),
@@ -638,6 +645,7 @@ async def list_all_submissions(
     }
 
 
+# 接口说明：教师删除已发布试卷提交，并清理对应的 LangGraph 检查点。
 @router.delete("/submissions/{submission_id}", status_code=204)
 async def delete_submission(
     submission_id: str,
@@ -694,6 +702,7 @@ class ConfirmRequest(BaseModel):
     modifications: list[dict] = []
 
 
+# 接口说明：教师批准或修改 AI 预批改结果，并恢复图执行发布最终成绩。
 @router.post("/submissions/{submission_id}/confirm")
 async def confirm_review(
     submission_id: str,

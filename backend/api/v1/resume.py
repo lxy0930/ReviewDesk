@@ -34,6 +34,7 @@ async def _mark_review_failed(review_id: str, error_msg: str) -> None:
         await session.commit()
 
 
+# 接口说明：用户上传 PDF 简历和目标岗位描述，异步触发六维简历审查。
 @router.post("/upload", status_code=202)         # 202 Accepted：已接受、正在处理
 async def upload_resume(
     file: UploadFile = File(...),                # 上传的文件
@@ -138,6 +139,7 @@ async def upload_resume(
     }
 
 
+# 接口说明：查询本人某次简历审查的状态或完整审查报告。
 @router.get("/reviews/{review_id}")
 async def get_review(review_id: str, current_user: dict = Depends(get_current_user)):
     """查询审查状态/结果。processing / done / failed / 404。"""
@@ -192,6 +194,7 @@ async def get_review(review_id: str, current_user: dict = Depends(get_current_us
     }
 
 
+# 接口说明：删除本人指定的简历审查记录。
 @router.delete("/reviews/{review_id}", status_code=204)
 async def delete_review(review_id: str, current_user: dict = Depends(get_current_user)):
     """删除审查记录（WHERE 带 student_id，只能删自己的）。"""
@@ -208,6 +211,7 @@ async def delete_review(review_id: str, current_user: dict = Depends(get_current
         raise HTTPException(status_code=404, detail="记录不存在")
 
 
+# 接口说明：查询本人历史简历审查记录。
 @router.get("/reviews")
 async def list_reviews(current_user: dict = Depends(get_current_user)):
     """列出本人历史审查记录（摘要，按时间倒序）。"""
