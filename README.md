@@ -2,10 +2,10 @@
 
 > 面向个人与课题组的 AI 提效工作台：自动批改 Word 试卷，并基于目标岗位描述诊断 PDF 简历。
 
-[![Vue](https://img.shields.io/badge/Frontend-Vue%203-42b883)](https://vuejs.org/)
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)](https://fastapi.tiangolo.com/)
-[![LangGraph](https://img.shields.io/badge/Agent-LangGraph-1c3c3c)](https://langchain-ai.github.io/langgraph/)
-[![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791)](https://www.postgresql.org/)
+[![Vue 3.5.39](https://img.shields.io/badge/Vue-3.5.39-42b883)](https://vuejs.org/)
+[![FastAPI 0.117.1](https://img.shields.io/badge/FastAPI-0.117.1-009688)](https://fastapi.tiangolo.com/)
+[![LangGraph 1.0.9](https://img.shields.io/badge/LangGraph-1.0.9-1c3c3c)](https://langchain-ai.github.io/langgraph/)
+[![PostgreSQL 15](https://img.shields.io/badge/PostgreSQL-15-336791)](https://www.postgresql.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ReviewDesk 是一个多 Agent 个人提效系统。后端通过统一的 Orchestrator 编排 LangGraph Workflow，目前包含两个完整业务 Agent：
