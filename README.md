@@ -69,6 +69,15 @@ ReviewDesk 是一个多 Agent 个人提效系统。后端通过统一的 Orchest
 - AI 回复由 LLM 生成并逐 token 流式返回。
 - 当前系统不包含 QA Agent、面试 Agent 或其他知识库问答能力。
 
+## Agent 可用性测试
+
+仓库提供可重复运行的 Exam Agent 基准测试，位于 `tests/exam_agent_benchmark/`。
+
+- 测试集包含 100 份试卷、2000 个逐题评分点，每份试卷由 8 道单选、4 道多选、3 道判断、3 道简答和 2 道代码题组成。
+- 当前基准结果：每份试卷平均绝对误差 `2.61` 分，逐题 MAE `0.3505` 分/题，单份试卷平均批改耗时 `8.78` 秒。
+- 测试报告见 [Exam Agent Report](tests/exam_agent_benchmark/exam_agent_report.md)，运行说明见 [Benchmark README](tests/exam_agent_benchmark/README.md)。
+- 基准中的学生答案和人工分数为 mock 数据，仅用于 Agent 可用性、回归和误差评估，不代表真实教师评分。
+
 ## 系统架构
 
 ```mermaid

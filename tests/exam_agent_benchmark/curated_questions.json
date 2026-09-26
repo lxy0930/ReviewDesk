@@ -1,0 +1,186 @@
+{
+  "judge": [
+    {"question": "Python 中的 list 是可变类型。", "answer": true, "explanation": "list 支持原地增删改。"},
+    {"question": "Python 中的 tuple 是不可变类型。", "answer": true, "explanation": "tuple 创建后不能修改元素。"},
+    {"question": "Python 字典中的键可以重复。", "answer": false, "explanation": "同一个字典中键必须唯一。"},
+    {"question": "Python 的 set 允许存储重复元素。", "answer": false, "explanation": "set 会自动去重。"},
+    {"question": "HTTP 是无状态协议。", "answer": true, "explanation": "HTTP 本身不保存请求之间的状态。"},
+    {"question": "TCP 是面向连接的协议。", "answer": true, "explanation": "TCP 通过三次握手建立连接。"},
+    {"question": "UDP 能保证数据可靠到达。", "answer": false, "explanation": "UDP 不保证可靠、有序到达。"},
+    {"question": "数据库索引只会提升写入速度，不会影响写入性能。", "answer": false, "explanation": "索引会提升查询性能，但通常增加写和维护成本。"},
+    {"question": "数据库主键列可以存储 NULL。", "answer": false, "explanation": "主键必须唯一且不能为 NULL。"},
+    {"question": "外键用于维护表之间的引用完整性。", "answer": true, "explanation": "外键限制引用值必须存在于关联表中。"},
+    {"question": "进程之间的内存空间默认相互隔离。", "answer": true, "explanation": "同一进程内的线程共享内存，进程之间默认隔离。"},
+    {"question": "同一进程内的多个线程通常共享进程内存。", "answer": true, "explanation": "线程共享代码、数据和堆等资源。"},
+    {"question": "死锁的发生必须满足循环等待条件。", "answer": true, "explanation": "循环等待是死锁产生的必要条件之一。"},
+    {"question": "在有序数组上执行二分查找，平均时间复杂度是 O(log n)。", "answer": true, "explanation": "每次比较可将搜索范围缩小一半。"},
+    {"question": "哈希表查询的最坏时间复杂度可能是 O(n)。", "answer": true, "explanation": "大量哈希冲突时可能退化为线性查找。"},
+    {"question": "递归函数必须存在终止条件，否则可能无限递归。", "answer": true, "explanation": "递归基线条件用于终止递归。"},
+    {"question": "HTTPS 是 HTTP 与 TLS 的结合。", "answer": true, "explanation": "HTTPS 通过 TLS 提供加密和身份验证。"},
+    {"question": "HTTP 404 表示服务器内部代码发生异常。", "answer": false, "explanation": "404 表示请求的资源不存在，500 才表示服务器错误。"},
+    {"question": "SQL JOIN 可以用于组合多个表中的数据。", "answer": true, "explanation": "JOIN 根据关联条件组合多表数据。"},
+    {"question": "ACID 是数据库事务的四个基本特性。", "answer": true, "explanation": "ACID 包括原子性、一致性、隔离性和持久性。"}
+  ],
+  "short_answer": [
+    {
+      "question": "请说明 Python 中 list 与 tuple 的主要区别。",
+      "reference_answer": "list 可变，tuple 不可变；list 使用方括号，tuple 使用圆括号；list 适合频繁修改，tuple 更适合固定数据。",
+      "points": [
+        {"desc": "指出 list 可变、tuple 不可变", "score": 5},
+        {"desc": "指出语法或使用场景差异", "score": 5}
+      ]
+    },
+    {
+      "question": "请说明进程与线程的主要区别。",
+      "reference_answer": "进程是资源分配的基本单位，线程是 CPU 调度的基本单位；同一进程内线程共享内存，进程之间默认内存隔离。",
+      "points": [
+        {"desc": "说明进程和线程的职责差异", "score": 5},
+        {"desc": "说明资源隔离与共享差异", "score": 5}
+      ]
+    },
+    {
+      "question": "请比较 TCP 和 UDP 的特点。",
+      "reference_answer": "TCP 面向连接、可靠、有序，但开销较大；UDP 无连接、不保证可靠性，但延迟低、开销小，适合实时传输。",
+      "points": [
+        {"desc": "说明 TCP 的连接和可靠性特点", "score": 5},
+        {"desc": "说明 UDP 的无连接和低开销特点", "score": 5}
+      ]
+    },
+    {
+      "question": "数据库索引有什么作用，可能带来什么代价？",
+      "reference_answer": "索引可以加速查询、排序和连接，但会增加存储空间和写入维护成本，过多索引会降低更新性能。",
+      "points": [
+        {"desc": "说明索引对查询的价值", "score": 5},
+        {"desc": "说明存储和写入成本", "score": 5}
+      ]
+    },
+    {
+      "question": "请说明数据库事务的 ACID 特性。",
+      "reference_answer": "原子性表示事务要么全部成功要么全部失败；一致性表示状态约束保持成立；隔离性表示并发事务互不干扰；持久性表示提交结果不会丢失。",
+      "points": [
+        {"desc": "说明原子性和一致性", "score": 5},
+        {"desc": "说明隔离性和持久性", "score": 5}
+      ]
+    },
+    {
+      "question": "HTTP 与 HTTPS 有什么区别？",
+      "reference_answer": "HTTPS 在 HTTP 与传输层之间加入 TLS，提供加密、完整性和服务器身份验证；HTTP 明文传输，安全性较低。",
+      "points": [
+        {"desc": "说明 HTTPS 使用 TLS 加密", "score": 5},
+        {"desc": "说明安全性和身份验证差异", "score": 5}
+      ]
+    },
+    {
+      "question": "产生死锁通常需要满足哪些条件？",
+      "reference_answer": "通常需要互斥、请求并保持、不可剥夺和循环等待四个条件同时成立。",
+      "points": [
+        {"desc": "说明互斥、占用且等待条件", "score": 5},
+        {"desc": "说明不可剥夺和循环等待条件", "score": 5}
+      ]
+    },
+    {
+      "question": "为什么数据库需要进行范式化设计？",
+      "reference_answer": "范式化可以减少数据冗余和更新异常，提高数据一致性；但过度范式化可能增加连接查询复杂度。",
+      "points": [
+        {"desc": "说明减少冗余和异常", "score": 5},
+        {"desc": "说明一致性与查询复杂度的权衡", "score": 5}
+      ]
+    },
+    {
+      "question": "主键和外键有什么区别？",
+      "reference_answer": "主键唯一标识本表记录且不能为空；外键引用另一张表的主键或唯一键，用于维护引用完整性。",
+      "points": [
+        {"desc": "说明主键唯一且非空", "score": 5},
+        {"desc": "说明外键的引用完整性作用", "score": 5}
+      ]
+    },
+    {
+      "question": "数据库事务隔离级别主要解决什么问题？",
+      "reference_answer": "隔离级别用于控制并发事务之间的可见性，降低脏读、不可重复读和幻读等问题，但可能影响并发性能。",
+      "points": [
+        {"desc": "说明并发事务隔离目标", "score": 5},
+        {"desc": "说明隔离性和性能之间的权衡", "score": 5}
+      ]
+    },
+    {
+      "question": "DNS 的主要作用是什么？",
+      "reference_answer": "DNS 将域名解析为 IP 地址，并支持邮件、服务发现等记录类型。",
+      "points": [
+        {"desc": "说明域名到 IP 的解析作用", "score": 5},
+        {"desc": "说明其他记录类型或服务发现", "score": 5}
+      ]
+    },
+    {
+      "question": "缓存命中与缓存未命中分别是什么？",
+      "reference_answer": "缓存命中表示请求的数据已在缓存中找到；未命中表示缓存中没有，需要回源查询并可能写回缓存。",
+      "points": [
+        {"desc": "说明缓存命中含义", "score": 5},
+        {"desc": "说明缓存未命中和回源", "score": 5}
+      ]
+    },
+    {
+      "question": "递归算法的两个必要条件是什么？",
+      "reference_answer": "递归需要基线条件用于终止，还需要递归条件逐步缩小问题规模。",
+      "points": [
+        {"desc": "说明基线条件", "score": 5},
+        {"desc": "说明递归条件", "score": 5}
+      ]
+    },
+    {
+      "question": "哈希表为什么通常能实现接近 O(1) 的查询？",
+      "reference_answer": "哈希函数把键映射到桶位置，平均情况下可以直接定位；冲突较多时可能退化为线性复杂度。",
+      "points": [
+        {"desc": "说明哈希映射和平均复杂度", "score": 5},
+        {"desc": "说明冲突导致的退化风险", "score": 5}
+      ]
+    },
+    {
+      "question": "栈和队列有什么区别？",
+      "reference_answer": "栈遵循后进先出，队列遵循先进先出；栈常用于函数调用和回溯，队列常用于任务调度和广度优先搜索。",
+      "points": [
+        {"desc": "说明 LIFO 和 FIFO 差异", "score": 5},
+        {"desc": "说明典型使用场景", "score": 5}
+      ]
+    },
+    {
+      "question": "面向对象中的封装有什么作用？",
+      "reference_answer": "封装把数据和操作数据的方法组织在一起，隐藏内部实现，限制非法访问，降低模块耦合。",
+      "points": [
+        {"desc": "说明数据和行为组织", "score": 5},
+        {"desc": "说明隐藏实现和降低耦合", "score": 5}
+      ]
+    },
+    {
+      "question": "REST API 中的资源是什么？",
+      "reference_answer": "资源是 API 暴露的业务实体或集合，通常通过 URI 标识，并使用 HTTP 方法表达操作。",
+      "points": [
+        {"desc": "说明资源与 URI 的关系", "score": 5},
+        {"desc": "说明 HTTP 方法表达操作", "score": 5}
+      ]
+    },
+    {
+      "question": "为什么平衡二叉搜索树能保持较好的查询效率？",
+      "reference_answer": "平衡树通过旋转或重构限制树高，使查找、插入和删除通常保持 O(log n)。",
+      "points": [
+        {"desc": "说明限制树高", "score": 5},
+        {"desc": "说明 O(log n) 的时间复杂度", "score": 5}
+      ]
+    },
+    {
+      "question": "如何防止 SQL 注入？",
+      "reference_answer": "优先使用参数化查询或 ORM，避免拼接用户输入；同时限制数据库权限并对输入进行校验。",
+      "points": [
+        {"desc": "说明参数化查询或 ORM", "score": 5},
+        {"desc": "说明权限和输入校验", "score": 5}
+      ]
+    },
+    {
+      "question": "分布式系统中的 CAP 分别代表什么？",
+      "reference_answer": "C 表示一致性，A 表示可用性，P 表示分区容错性；网络分区发生时通常需要在一致性和可用性之间取舍。",
+      "points": [
+        {"desc": "说明 CAP 三个字母含义", "score": 5},
+        {"desc": "说明分区条件下的取舍", "score": 5}
+      ]
+    }
+  ]
+}
